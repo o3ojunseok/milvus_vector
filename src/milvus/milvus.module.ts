@@ -1,6 +1,6 @@
-import { Module } from '@nestjs/common';
-import { MilvusService } from './milvus.service';
-import { MilvusController } from './milvus.controller';
+import { Module } from "@nestjs/common";
+import { MilvusService } from "./milvus.service";
+import { MilvusController } from "./milvus.controller";
 
 @Module({
   controllers: [MilvusController],
