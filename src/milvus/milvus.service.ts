@@ -109,7 +109,7 @@ export class MilvusService {
         {
           name: "vector",
           data_type: DataType.FloatVector,
-          dim: 4096,
+          dim: 3072,
         },
         {
           name: "content",
