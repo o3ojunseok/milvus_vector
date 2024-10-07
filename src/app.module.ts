@@ -3,9 +3,10 @@ import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { MilvusModule } from "./milvus/milvus.module";
 import { OpenAiModule } from "./open-ai/open-ai.module";
+import { ContentModule } from './content/content.module';
 
 @Module({
-  imports: [MilvusModule, OpenAiModule],
+  imports: [MilvusModule, OpenAiModule, ContentModule],
   controllers: [AppController],
   providers: [AppService],
 })
