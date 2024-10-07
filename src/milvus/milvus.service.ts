@@ -116,6 +116,11 @@ export class MilvusService {
           data_type: DataType.VarChar,
           max_length: 128,
         },
+        {
+          name: "answer",
+          data_type: DataType.VarChar,
+          max_length: 2048, 
+        }
       ],
     });
 
