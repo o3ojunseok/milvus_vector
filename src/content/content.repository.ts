@@ -2,6 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { DataSource, Repository } from "typeorm";
 import { Content } from "./content.entity";
 import { CreateContentDto } from "./dto/create-content.dto";
+import { plainToInstance } from "class-transformer";
 
 @Injectable()
 export class ContentRepository extends Repository<Content> {
@@ -20,6 +21,7 @@ export class ContentRepository extends Repository<Content> {
   }
 
   async postContent(createContentDto: CreateContentDto) {
+    const content: Content = plainToInstance(Content, createContentDto);
     const queryRunner = this.dataSource.createQueryRunner();
     
     await queryRunner.connect();
@@ -28,6 +30,7 @@ export class ContentRepository extends Repository<Content> {
     try {
       await queryRunner.manager.save(createContentDto);
       await queryRunner.commitTransaction();
+      return content;
     } catch (err){
       await queryRunner.rollbackTransaction();
     } finally {
