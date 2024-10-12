@@ -3,6 +3,7 @@ import { DataSource, Repository } from "typeorm";
 import { Content } from "./content.entity";
 import { CreateContentDto } from "./dto/create-content.dto";
 import { plainToInstance } from "class-transformer";
+import { UpdateContentDto } from "./dto/update-content.dto";
 
 @Injectable()
 export class ContentRepository extends Repository<Content> {
@@ -38,4 +39,21 @@ export class ContentRepository extends Repository<Content> {
     }
   }
 
+  async updateContent(id: number, updateContentDto: UpdateContentDto) {
+    const content: Content = plainToInstance(Content, updateContentDto);
+    const queryRunner = this.dataSource.createQueryRunner();
+    
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+
+    try {
+      await queryRunner.manager.update(Content, id, updateContentDto);
+      await queryRunner.commitTransaction();
+      return content;
+    } catch (err){
+      await queryRunner.rollbackTransaction();
+    } finally {
+      await queryRunner.release();
+    }
+  }
 }
