@@ -10,6 +10,10 @@ export class ContentService {
     private readonly contentRepository: ContentRepository,
   ) {}
 
+  async findAllContent() {
+    return await this.contentRepository.findAll();
+  }
+
   async findOneContent(id: number) {
     return await this.contentRepository.findOneContent(id);
   }
