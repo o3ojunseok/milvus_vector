@@ -14,7 +14,7 @@ export class OpenAiService {
     });
   }
 
-  async embedding(text: string[], dimensions=3072) {
+  async embedding(text: string[], dimensions=3072): Promise<number[]> {
     try {
       const openai = await this.openAiKey();
       const embed = await openai.embeddings.create({
@@ -22,7 +22,7 @@ export class OpenAiService {
         input: text,
         dimensions,
       });
-      return embed;
+      return embed.data[0].embedding;
     } catch (err) {
       console.log(err);
       throw new BadRequestException("key error");
@@ -77,11 +77,11 @@ export class OpenAiService {
 
   async gptChat(gptType: GptTypeRole, messages: MessagesType[]) {
     try {
-        const openai = await this.openAiKey();
-        const response = await openai.chat.completions
-        .create({
-          model: gptType,
-          messages,
+      const openai = await this.openAiKey();
+      const response = await openai.chat.completions
+      .create({
+        model: gptType,
+        messages,
       });
       return response;
     } catch (err) {
@@ -93,7 +93,7 @@ export class OpenAiService {
     }
   }
 
-  async zodParse(prompt: string, data: { sessionId: string, input: string }[]) {
+  async zodParse(prompt: string, data: string[]) {
     const schema = z.object({
       res: z.array(
         z.object({

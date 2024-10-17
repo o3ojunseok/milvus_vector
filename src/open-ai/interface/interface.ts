@@ -14,3 +14,4 @@ export interface MessagesType {
   role: RoleType;
   content: string;
 }
+
