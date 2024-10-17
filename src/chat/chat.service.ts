@@ -20,14 +20,15 @@ export class ChatService {
     ];
   }
 
-  async vectorSearchChat(chatDto: ChatDto) {
+  async vectorSearchChat(chatDto: ChatDto): Promise<any | string> {
     const embedding = await this.openAiService.embedding([chatDto.text]);
     const search = await this.milvusService.vectorSearch("test", embedding);
     if (search.results[0].score < 0.7) {
       return search.results[0];
     } else {
       const messages = this.userMessages(chatDto.text);
-      return await this.openAiService.gptChat(GptTypeRole.GPT_4O_MINI, messages)
+      const response = await this.openAiService.gptChat(GptTypeRole.GPT_4O_MINI, messages)
+      return response.choices[0].message.content;
     }
   }
 }

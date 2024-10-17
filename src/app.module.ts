@@ -7,6 +7,8 @@ import { ContentModule } from './content/content.module';
 import { ChatModule } from './chat/chat.module';
 import { ConfigModule } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
+import { MongooseModule } from "@nestjs/mongoose";
+import { MongoModule } from './mongo/mongo.module';
 
 @Module({
   imports: [
@@ -24,10 +26,14 @@ import { TypeOrmModule } from "@nestjs/typeorm";
       synchronize: true,
       timezone: "Z",
     }),
+    MongooseModule.forRoot(process.env.MONGO_DB_URL, {
+      dbName: process.env.MONGO_DATABASE_NAME,
+    }),
     MilvusModule,
     OpenAiModule,
     ContentModule,
     ChatModule,
+    MongoModule,
   ],
   controllers: [AppController],
   providers: [AppService],
