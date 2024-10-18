@@ -3,12 +3,12 @@ import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { MilvusModule } from "./milvus/milvus.module";
 import { OpenAiModule } from "./open-ai/open-ai.module";
-import { ContentModule } from './content/content.module';
-import { ChatModule } from './chat/chat.module';
+import { ContentModule } from "./content/content.module";
+import { ChatModule } from "./chat/chat.module";
 import { ConfigModule } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { MongooseModule } from "@nestjs/mongoose";
-import { MongoModule } from './mongo/mongo.module';
+import { MongoModule } from "./mongo/mongo.module";
 
 @Module({
   imports: [
