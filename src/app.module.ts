@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import { MiddlewareConsumer, Module, NestModule, RequestMethod } from "@nestjs/common";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { MilvusModule } from "./milvus/milvus.module";
@@ -9,6 +9,7 @@ import { ConfigModule } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { MongooseModule } from "@nestjs/mongoose";
 import { MongoModule } from "./mongo/mongo.module";
+import { LoggerMiddleware } from "./logger.middleware";
 
 @Module({
   imports: [
@@ -38,4 +39,14 @@ import { MongoModule } from "./mongo/mongo.module";
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer): any {
+    consumer
+      .apply(LoggerMiddleware)
+      .exclude(
+        { path: "/", method: RequestMethod.GET},
+      )
+      .forRoutes({ path: "*", method: RequestMethod.ALL });
+  }
+}
