@@ -10,6 +10,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { MongooseModule } from "@nestjs/mongoose";
 import { MongoModule } from "./mongo/mongo.module";
 import { LoggerMiddleware } from "./logger.middleware";
+import { ScrapingModule } from './scraping/scraping.module';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { LoggerMiddleware } from "./logger.middleware";
     ContentModule,
     ChatModule,
     MongoModule,
+    ScrapingModule,
   ],
   controllers: [AppController],
   providers: [AppService],
