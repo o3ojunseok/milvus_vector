@@ -11,6 +11,7 @@ import { MongooseModule } from "@nestjs/mongoose";
 import { MongoModule } from "./mongo/mongo.module";
 import { LoggerMiddleware } from "./logger.middleware";
 import { ScrapingModule } from './scraping/scraping.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { ScrapingModule } from './scraping/scraping.module';
     ChatModule,
     MongoModule,
     ScrapingModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],
